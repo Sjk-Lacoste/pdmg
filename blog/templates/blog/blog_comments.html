@@ -1,0 +1,50 @@
+{% load crispy_forms_tags %}
+
+<div class="pt-5">
+    <h3 class="mb-5">{{ comments.count }} Comments</h3>
+
+    <ul class="comment-list">
+        {% for comment in comments %}
+            <li class="comment">
+                <div class="vcard bio">
+                    <img src="images/person_2.jpg" alt="Image">
+                </div>
+                <div class="comment-body">
+                    <h3>{{ comment.name }}</h3>
+
+                    <div class="meta">
+                        {{ comment.created_on }}
+                    </div>
+
+                    <p>
+                        {{ comment.body | safe }}
+                    </p>
+                    <p>
+                        <a href="#" class="reply">Reply</a>
+                    </p>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <!-- END comment-list -->
+
+    <div class="comment-form-wrap pt-5">
+        {% if new_comment %}
+            <div class="alert alert-success" role="alert">
+                Your comment is awaiting moderation
+            </div>
+        {% else %}
+            <h3 class="mb-5">Leave a comment</h3>
+
+            <form method="post" class="">
+                {{ comment_form | crispy }}
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <input type="submit" value="Post Comment" class="btn btn-primary btn-md text-white">
+                </div>
+
+            </form>
+        {% endif %}
+    </div>
+</div>
