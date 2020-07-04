@@ -1,5 +1,7 @@
 {% load crispy_forms_tags %}
 
+{% load static %}
+
 <div class="pt-5">
     <h3 class="mb-5">
         {{ comments.count }} 
@@ -14,7 +16,7 @@
         {% for comment in comments %}
             <li class="comment">
                 <div class="vcard bio">
-                    <img src="images/person_2.jpg" alt="Image">
+                    <img src="{% static 'images/person_2.jpg'%}" alt="Image">
                 </div>
                 <div class="comment-body">
                     <h3>{{ comment.name }}</h3>
@@ -44,13 +46,12 @@
             <h3 class="mb-5">Leave a comment</h3>
 
             <form method="post" class="">
-                {{ comment_form | crispy }}
                 {% csrf_token %}
+                {{ comment_form | crispy }}
 
                 <div class="form-group">
                     <input type="submit" value="Post Comment" class="btn btn-primary btn-md text-white">
                 </div>
-
             </form>
         {% endif %}
     </div>
