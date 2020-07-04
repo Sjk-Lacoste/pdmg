@@ -7,11 +7,11 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 class Post(models.Model):
-    DRAFT = 0
-    PUBLISH = 1
+    D = 0
+    P = 1
     STATUS = [
-        (DRAFT, "Draft"),
-        (PUBLISH, "Publish")
+        (D, "Draft"),
+        (P, "Publish")
     ]
 
     title = models.CharField(max_length=100)
@@ -52,6 +52,11 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        kwargs = {
+            'slug': self.slug
+        }
+        return reverse('category_posts', kwargs=kwargs)
 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')

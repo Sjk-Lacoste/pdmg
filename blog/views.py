@@ -1,6 +1,7 @@
+from django.db import models
 from django.views.generic import ListView, DetailView
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from .models import Post, Category
 from .forms import CommentForm
 
 
@@ -16,6 +17,7 @@ def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
     comments = post.comments.filter(active=True).order_by('-created_on')
     new_comment = None
+    categories = Category.objects.annotate(num_posts=models.Count('post')).all()
 
     # Comment posted
     if request.method == 'POST':
@@ -34,6 +36,10 @@ def post_detail(request, slug):
         'post': post,
         'comments': comments,
         'new_comment': new_comment,
-        'comment_form': comment_form
+        'comment_form': comment_form,
+        'categories': categories
     }
     return render(request, template_name, context)
+
+def category_view(request):
+    pass

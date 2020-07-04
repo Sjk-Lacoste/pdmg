@@ -1,7 +1,14 @@
 {% load crispy_forms_tags %}
 
 <div class="pt-5">
-    <h3 class="mb-5">{{ comments.count }} Comments</h3>
+    <h3 class="mb-5">
+        {{ comments.count }} 
+        {% if comments.count == 1 %}
+            Comment 
+        {% else %}
+            Comments
+        {% endif %}
+    </h3>
 
     <ul class="comment-list">
         {% for comment in comments %}
