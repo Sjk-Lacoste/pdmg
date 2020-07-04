@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
     <div class="ftco-blocks-cover-1">
-        <div class="site-section-cover overlay" style="background-image: url('images/hero_1.jpg')">
+        <div class="site-section-cover overlay" style="background-image: url({% static 'images/hero_1.jpg' %})">
             <div class="container">
                 <div class="row align-items-center justify-content-center">
                     <div class="col-md-7 text-center">
@@ -20,40 +22,43 @@
 
     <div class="site-section bg-light">
         <div class="container">
-            <div class="row">
-                {% for post in post_list %}
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="post-entry-1 h-100">
-                            <a href="{{ post.get_absolute_url }}">
-                                <img src="/images/img_1.jpg" alt="{{ post.title }}" class="img-fluid">
-                            </a>
-                            <div class="post-entry-1-contents">
-                                <h2>
-                                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-                                </h2>
-                                <span class="meta d-inline-block mb-3">
-                                    {{ post.updated_on }} <span class="mx-2">by</span> <a href="#">{{ post.author }}</a></span>
-                                <p>
-                                    {{ post.content|slice:":200" }}
-                                </p>
+            {% if post_list %}
+                <div class="row">
+                    {% for post in post_list %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="post-entry-1 h-100">
+                                <a href="{{ post.get_absolute_url }}">
+                                    <img src="/images/img_1.jpg" alt="{{ post.title }}" class="img-fluid">
+                                </a>
+                                <div class="post-entry-1-contents">
+                                    <h2>
+                                        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                                    </h2>
+                                    <span class="meta d-inline-block mb-3">
+                                        {{ post.updated_on }} <span class="mx-2">by</span> <a href="#">{{ post.author }}</a></span>
+                                    <p>
+                                        {{ post.content|slice:":200" }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
-
-            {% if is_paginated %}
-                <div class="col-12 mt-5 text-center">
-                    <ul class="pagination justify-content-between">
-                        {% if page_obj.has_previous %}
-                            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
-                        {% endif %}
-
-                        {% if page_obj.has_next %}
-                            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
-                        {% endif %}
-                    </ul>
+                    {% endfor %}
+                    
                 </div>
+
+                {% if is_paginated %}
+                    <div class="col-12 mt-5 text-center">
+                        <ul class="pagination justify-content-between">
+                            {% if page_obj.has_previous %}
+                                <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+                            {% endif %}
+
+                            {% if page_obj.has_next %}
+                                <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
     </div> <!-- END .site-section -->
